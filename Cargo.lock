@@ -1,4 +1,20 @@
 [root]
 name = "telehash-rust"
 version = "0.0.1"
+dependencies = [
+ "sodiumoxide 0.0.1 (git+https://github.com/dnaq/sodiumoxide.git)",
+]
+
+[[package]]
+name = "libsodium-sys"
+version = "0.0.1"
+source = "git+https://github.com/dnaq/sodiumoxide.git#26c0a40f017af71bcbbec1b362a59cca06dd0319"
+
+[[package]]
+name = "sodiumoxide"
+version = "0.0.1"
+source = "git+https://github.com/dnaq/sodiumoxide.git#26c0a40f017af71bcbbec1b362a59cca06dd0319"
+dependencies = [
+ "libsodium-sys 0.0.1 (git+https://github.com/dnaq/sodiumoxide.git)",
+]
 
