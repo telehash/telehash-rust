@@ -1,0 +1,5 @@
+[package]
+
+name = "telehash-rust"
+version = "0.0.1"
+authors = ["Jeremie Miller <jeremie@jabber.org>"]
