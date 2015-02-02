@@ -1,10 +1,11 @@
 
+use std::result;
 use std::string;
 use std::iter;
 
 static STANDARD_CHARS: &'static[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
-pub fn encode(b: &[u8]) -> String {
+pub fn encode(b: &[u8]) -> Result<String, string::FromUtf8Error> {
     let mut out = Vec::new();
     let mut n: u64 = 0;
 
@@ -26,9 +27,9 @@ pub fn encode(b: &[u8]) -> String {
             };
 
             // Pull out each 5-bit index
-            for j in iter::range_step(35i, (35 - (groups * 5)), -5) {
-                let ndx = (n >> j as uint) & 31;
-                out.push(STANDARD_CHARS[ndx as uint]);
+            for j in iter::range_step(35, (35 - (groups * 5)), -5) {
+                let ndx = (n >> j as u32) & 31;
+                out.push(STANDARD_CHARS[ndx as usize]);
             }
 
             // Reset n
@@ -36,9 +37,7 @@ pub fn encode(b: &[u8]) -> String {
         }
     }
 
-    unsafe {
-        string::raw::from_utf8(out)
-    }
+    String::from_utf8(out)
 }
 
 pub fn decode(b: &[u8]) -> Vec<u8> {
@@ -73,8 +72,8 @@ pub fn decode(b: &[u8]) -> Vec<u8> {
             };
 
             // Pull out each 8-bit group
-            for j in iter::range_step(32i, (32 - (groups * 8)), -8) {
-                let v = ((n >> j as uint) & 255) as u8;
+            for j in iter::range_step(32, (32 - (groups * 8)), -8) {
+                let v = ((n >> j as u8) & 255) as u8;
                 out.push(v);
             }
 
@@ -87,9 +86,11 @@ pub fn decode(b: &[u8]) -> Vec<u8> {
 }
 
 macro_rules! check_encode(
-    ($input:expr, $expected:expr) => (
-        assert_eq!($expected, encode($input.as_bytes()));
-        );
+    ($input:expr, $expected:expr) => ( {
+        let x: Result<String, string::FromUtf8Error> = encode($input.as_bytes());
+        assert_eq!(x.is_ok(), true);
+        assert_eq!($expected, x.unwrap());
+    });
     );
 
 macro_rules! check_decode(
