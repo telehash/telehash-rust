@@ -1,6 +1,7 @@
 
 use std::string;
 use std::iter;
+use std::ascii::AsciiExt;
 
 static STANDARD_CHARS: &'static[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
@@ -88,7 +89,7 @@ macro_rules! check_encode(
     ($input:expr, $expected:expr) => ( {
         let x: Result<String, string::FromUtf8Error> = encode($input.as_bytes());
         assert_eq!(x.is_ok(), true);
-        assert_eq!($expected, x.unwrap());
+        assert!(x.unwrap().eq_ignore_ascii_case($expected));
     });
     );
 
@@ -104,7 +105,7 @@ macro_rules! check_decode(
 fn encode_tests() {
     check_encode!("", "");
     check_encode!("f", "MY");
-    check_encode!("foo", "MZXW6");
+    check_encode!("foo", "MZXw6");
     check_encode!("foob", "MZXW6YQ");
     check_encode!("fooba", "MZXW6YTB");
     check_encode!("foobar", "MZXW6YTBOI");
