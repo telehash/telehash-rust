@@ -3,7 +3,7 @@ use std::string;
 use std::iter;
 use std::ascii::AsciiExt;
 
-static STANDARD_CHARS: &'static[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+static STANDARD_CHARS: &'static[u8] = b"abcdefghijklmnopqrstuvwxyz234567";
 
 pub fn encode(b: &[u8]) -> Result<String, string::FromUtf8Error> {
     let mut out = Vec::new();
@@ -49,6 +49,7 @@ pub fn decode(b: &[u8]) -> Vec<u8> {
         let c = b[i];
         let idx = match c as char {
             'A' ... 'Z' => c - 65, // A..Z => 65..90
+            'a' ... 'z' => c - 97, // a..z => 97..122
             _ => 26 + (c - 50)     // 2..7 => 50..55
         };
 
@@ -116,7 +117,7 @@ fn decode_tests() {
     check_decode!("", "");
     check_decode!("f", "MY");
     check_decode!("foo", "MZXW6");
-    check_decode!("foob", "MZXW6YQ");
+    check_decode!("foob", "MZxw6YQ");
     check_decode!("fooba", "MZXW6YTB");
     check_decode!("foobar", "MZXW6YTBOI");
 }
