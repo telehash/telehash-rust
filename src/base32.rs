@@ -1,5 +1,4 @@
 
-use std::result;
 use std::string;
 use std::iter;
 
@@ -9,7 +8,7 @@ pub fn encode(b: &[u8]) -> Result<String, string::FromUtf8Error> {
     let mut out = Vec::new();
     let mut n: u64 = 0;
 
-    for i in range(0, b.len()) {
+    for i in 0 .. b.len() {
         // Calculate the shift (32, 24, 16, 8, 0)
         let shift = 8 * (4 - (i % 5));
         n |= (b[i] as u64) << shift;
