@@ -1,8 +1,8 @@
-before_install:
-  - sudo add-apt-repository --yes ppa:hansjorg/rust
-  - sudo add-apt-repository --yes ppa:cmrx64/cargo
-  - sudo apt-get update -qq
+language: rust
 install:
-  - sudo apt-get install -qq rust-nightly cargo
+  - wget https://github.com/jedisct1/libsodium/releases/download/1.0.0/libsodium-1.0.0.tar.gz
+  - tar xvfz libsodium-1.0.0.tar.gz
+  - cd libsodium-1.0.0 && ./configure --prefix=/usr && make && sudo make install && cd ..
 script:
   - cargo build --verbose
+  - cargo test --verbose
