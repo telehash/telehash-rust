@@ -1,5 +1,4 @@
 
-use std::string;
 use std::iter;
 use std::ascii::AsciiExt;
 
@@ -39,7 +38,7 @@ pub fn encode(b: &[u8]) -> String {
 
     let result = match String::from_utf8(out) {
         Ok(s) => s,
-        Err(E) => panic!(E)
+        Err(e) => panic!(e)
     };
     result
 }
@@ -92,9 +91,8 @@ pub fn decode(b: &[u8]) -> Vec<u8> {
 
 macro_rules! check_encode(
     ($input:expr, $expected:expr) => ( {
-        let x: Result<String, string::FromUtf8Error> = encode($input.as_bytes());
-        assert_eq!(x.is_ok(), true);
-        assert!(x.unwrap().eq_ignore_ascii_case($expected));
+        let x = encode($input.as_bytes());
+        assert!(x.eq_ignore_ascii_case($expected));
     });
     );
 
