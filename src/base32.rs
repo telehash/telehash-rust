@@ -5,7 +5,7 @@ use std::ascii::AsciiExt;
 
 static STANDARD_CHARS: &'static[u8] = b"abcdefghijklmnopqrstuvwxyz234567";
 
-pub fn encode(b: &[u8]) -> Result<String, string::FromUtf8Error> {
+pub fn encode(b: &[u8]) -> String {
     let mut out = Vec::new();
     let mut n: u64 = 0;
 
@@ -37,7 +37,11 @@ pub fn encode(b: &[u8]) -> Result<String, string::FromUtf8Error> {
         }
     }
 
-    String::from_utf8(out)
+    let result = match String::from_utf8(out) {
+        Ok(s) => s,
+        Err(E) => panic!(E)
+    };
+    result
 }
 
 pub fn decode(b: &[u8]) -> Vec<u8> {
