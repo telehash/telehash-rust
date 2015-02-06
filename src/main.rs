@@ -8,6 +8,7 @@ use sodiumoxide::crypto::hash;
 use sodiumoxide::crypto::asymmetricbox;
 
 mod base32;
+mod lob;
 
 fn main() {
     sodiumoxide::init();
