@@ -17,6 +17,8 @@ fn main() {
     let rd = base32::encode(&d);
     println!("{}", rd);
     println!("{}", 'A' as u8);
+    let dr = base32::decode(rd.as_bytes());
+    println!("{}", String::from_utf8(dr).ok().unwrap());
 
     // Generate the key pair
     let (asymmetricbox::curve25519xsalsa20poly1305::PublicKey(pubk), _privk) =
@@ -31,7 +33,7 @@ fn main() {
     rollup.push_all(&intermedk);
 
     // Generate digest and then base32 encode
-    let hash::sha256::Digest(finalk) = hash::sha256::hash(rollup.as_slice());
+    let hash::sha256::Digest(finalk) = hash::sha256::hash(&rollup[..]);
     let kd = base32::encode(&finalk);
     println!("Key: {}", kd);
 

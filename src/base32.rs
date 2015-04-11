@@ -1,6 +1,5 @@
 
 use std::iter;
-use std::ascii::AsciiExt;
 
 static STANDARD_CHARS: &'static[u8] = b"abcdefghijklmnopqrstuvwxyz234567";
 
