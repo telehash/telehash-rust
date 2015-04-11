@@ -26,7 +26,7 @@ pub fn encode(b: &[u8]) -> String {
             };
 
             // Pull out each 5-bit index
-            for j in iter::range_step(35, (35 - (groups * 5)), -5) {
+            for j in iter::range_step_inclusive(35, (35 - (groups * 5)), -5) {
                 let ndx = (n >> j as u32) & 31;
                 out.push(STANDARD_CHARS[ndx as usize]);
             }
@@ -47,7 +47,7 @@ pub fn decode(b: &[u8]) -> Vec<u8> {
     let mut out: Vec<u8> = Vec::new();
     let mut n: u64 = 0;
 
-    for i in range(0, b.len()) {
+    for i in iter::range_inclusive(0, b.len()) {
         // Use the character to generate an index
         let c = b[i];
         let idx = match c as char {
@@ -76,7 +76,7 @@ pub fn decode(b: &[u8]) -> Vec<u8> {
             };
 
             // Pull out each 8-bit group
-            for j in iter::range_step(32, (32 - (groups * 8)), -8) {
+            for j in iter::range_step_inclusive(32, (32 - (groups * 8)), -8) {
                 let v = ((n >> j as u8) & 255) as u8;
                 out.push(v);
             }
@@ -98,7 +98,7 @@ macro_rules! check_encode(
 
 macro_rules! check_decode(
     ($expected:expr, $input:expr) => (
-        assert_eq!($expected.as_bytes(), decode($input.as_bytes()));
+        assert_eq!($expected, decode($input.as_bytes()));
         );
 );
 
