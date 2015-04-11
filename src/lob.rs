@@ -1,7 +1,7 @@
 
 pub mod lob {
 
-    struct Packet {
+    pub struct Packet {
       pub head: u8,
       pub body: u8
     }
