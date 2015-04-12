@@ -96,10 +96,11 @@ macro_rules! check_encode(
     );
 
 macro_rules! check_decode(
-    ($expected:expr, $input:expr) => (
-        assert_eq!($expected, decode($input.as_bytes()));
-        );
-);
+    ($expected:expr, $input:expr) => ( {
+        let d = String::from_utf8(decode($input.as_bytes()));
+        assert_eq!($expected, d.ok().unwrap());
+    });
+    );
 
 
 
