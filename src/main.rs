@@ -38,6 +38,11 @@ fn main() {
     println!("Key: {}", kd);
 
     /*    js hash = sha256(0x1a) hash = sha256(hash + base32decode(")) hash = sha256(hash + 0x3a) hash = sha256(hash + base32decode("ckczcg2fq5hhaksfqgnm44xzheku6t7c4zksbd3dr4wffdvvem6q")) print base32encode(hash) "27ywx5e5ylzxfzxrhptowvwntqrd3jhksyxrfkzi6jfn64d3lwxa"*/
+    
+    // lob packet rigging
+    let p = lob::parse("test".as_bytes());
+    let b = lob::raw(&p);
+    println!("{}", String::from_utf8(b).ok().unwrap());
 }
 
 
