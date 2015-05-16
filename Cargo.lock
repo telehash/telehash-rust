@@ -2,8 +2,14 @@
 name = "telehash-rust"
 version = "0.0.1"
 dependencies = [
+ "base32 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "sodiumoxide 0.0.4 (git+https://github.com/dnaq/sodiumoxide.git)",
 ]
+
+[[package]]
+name = "base32"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "libc"
